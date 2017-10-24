@@ -1,40 +1,67 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 from sqlalchemy import create_engine
-from json import dumps
-import flask_jsonpify as jsonify
+from json import dumps, load, loads
+from flask.ext.jsonpify import jsonify
 
-db_connect = create_engine('sqlite:///a1.db')
+#import flask_jsonpify as jsonify
+import sqlite3
+
+sqlite_file = "a1.sqlite"
 app = Flask(__name__)
 api = Api(app)
 
 class RFQ(Resource):
     def get(self):
-        conn = db_connect.connect()  # connect to database
-        query = conn.execute("select * from employees")  # This line performs query and returns json result
-        return {'employees': [i[0] for i in query.cursor.fetchall()]}  # Fetches first column that is Employee ID
+        attributes = ['ID','accountid','productnumber','quantity', 'price', 'pricevalidationperiod']
+        conn = sqlite3.connect(sqlite_file)  # connect to database
+        c = conn.cursor()
+        c.execute("select * from rfq")  # This line performs query and returns json result
+        r = c.fetchall()
+        for tuple in r:
+            x = {'rfq': [dict({n: m for n, m in zip(attributes, tuple)})]}
+            print (x)
+            return jsonify(x)
+
+    def post(self):
+
+        data = request.get_json()
+        print(data['ID'])
+        conn = sqlite3.connect(sqlite_file)  # connect to database
+        c = conn.cursor()
+        c.execute(("INSERT into rfq (ID, AccountID, ProductNumber, Quantity) VALUES ({a},{b},{c},{d})").format(a=data['ID'], b=data['accountid'], c=data['productnumber'], d=data['quantity']))  # This line performs query and returns json result
+        conn.commit()
+        return ((data))
 
 
 class Account(Resource):
     def get(self):
-        conn = db_connect.connect()
-        query = conn.execute("select trackid, name, composer, unitprice from tracks;")
-        result = {'data': [dict(zip(tuple(query.keys()), i)) for i in query.cursor]}
+        conn = sqlite3.connect(sqlite_file)  # connect to database
+        c = conn.cursor()
+        c.execute("select trackid, name, composer, unitprice from tracks;")
+        result = c.fetchall()
         return dumps(result)
 
 
 class Product_Number(Resource):
     def get(self, tracks_id):
-        conn = db_connect.connect()
-        query = conn.execute("select * from tracks where TrackId =%d " % int(tracks_id))
-        result = {'data': [dict(zip(tuple(query.keys()), i)) for i in query.cursor]}
+        conn = sqlite3.connect(sqlite_file)  # connect to database
+        c = conn.cursor()
+        c.execute("select * from tracks where TrackId =%d " % int(tracks_id))
+        result = c.fetchall()
         return dumps(result)
 
 
 class Quantity(Resource):
     def get(self, employee_id):
-        conn = db_connect.connect()
-        query = conn.execute("select * from employees where EmployeeId =%d " % int(employee_id))
-        result = {'data': [dict(zip(tuple(query.keys()), i)) for i in query.cursor]}
+        conn = sqlite3.connect(sqlite_file)  # connect to database
+        c = conn.cursor()
+        c.execute("select * from employees where EmployeeId =%d " % int(employee_id))
+        result = c.fetchall()
         return dumps(result)
+
+api.add_resource(RFQ, '/rfq') # Route_1
+
+if __name__ == '__main__':
+     app.run(port='5002')
 
