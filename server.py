@@ -2,10 +2,9 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 from sqlalchemy import create_engine
 from json import dumps, load, loads
-from flask.ext.jsonpify import jsonify
-
-#import flask_jsonpify as jsonify
+from  flask_jsonpify import jsonify
 import sqlite3
+import protobuf
 
 sqlite_file = "a1.sqlite"
 app = Flask(__name__)
