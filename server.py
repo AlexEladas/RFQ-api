@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from json import dumps, load, loads
 from  flask_jsonpify import jsonify
 import sqlite3
-import protobuf
+
 
 sqlite_file = "a1.sqlite"
 app = Flask(__name__)
@@ -30,6 +30,8 @@ class RFQ(Resource):
         c = conn.cursor()
         c.execute(("INSERT into rfq (ID, AccountID, ProductNumber, Quantity) VALUES ({a},{b},{c},{d})").format(a=data['ID'], b=data['accountid'], c=data['productnumber'], d=data['quantity']))  # This line performs query and returns json result
         conn.commit()
+        c.execute(("select price from rfp where ProductNumber={a}").format(a=data['productnumber']))
+
         return ((data))
 
 
