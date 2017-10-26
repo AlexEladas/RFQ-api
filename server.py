@@ -4,7 +4,6 @@ from sqlalchemy import create_engine
 from json import dumps, load, loads
 from  flask_jsonpify import jsonify
 import sqlite3
-import protobuf
 
 sqlite_file = "a1.sqlite"
 app = Flask(__name__)
