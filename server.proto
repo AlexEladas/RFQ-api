@@ -4,5 +4,8 @@ message RFQ {
   int32 ID = 1;
   int32 accountid = 2;
   int32 productnumber = 3;
-  int32 quantity = 4;
+  string productcategory = 4;
+  int32 quantity = 5;
+  int32 price = 6;
+  string pricevalidation = 7;
 }

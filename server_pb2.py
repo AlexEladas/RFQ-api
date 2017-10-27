@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='server.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x0cserver.proto\"M\n\x03RFQ\x12\n\n\x02ID\x18\x01 \x01(\x05\x12\x11\n\taccountid\x18\x02 \x01(\x05\x12\x15\n\rproductnumber\x18\x03 \x01(\x05\x12\x10\n\x08quantity\x18\x04 \x01(\x05\x62\x06proto3')
+  serialized_pb=_b('\n\x0cserver.proto\"\x8e\x01\n\x03RFQ\x12\n\n\x02ID\x18\x01 \x01(\x05\x12\x11\n\taccountid\x18\x02 \x01(\x05\x12\x15\n\rproductnumber\x18\x03 \x01(\x05\x12\x17\n\x0fproductcategory\x18\x04 \x01(\t\x12\x10\n\x08quantity\x18\x05 \x01(\x05\x12\r\n\x05price\x18\x06 \x01(\x05\x12\x17\n\x0fpricevalidation\x18\x07 \x01(\tb\x06proto3')
 )
 
 
@@ -54,9 +54,30 @@ _RFQ = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='quantity', full_name='RFQ.quantity', index=3,
-      number=4, type=5, cpp_type=1, label=1,
+      name='productcategory', full_name='RFQ.productcategory', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='quantity', full_name='RFQ.quantity', index=4,
+      number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='price', full_name='RFQ.price', index=5,
+      number=6, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='pricevalidation', full_name='RFQ.pricevalidation', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -72,8 +93,8 @@ _RFQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16,
-  serialized_end=93,
+  serialized_start=17,
+  serialized_end=159,
 )
 
 DESCRIPTOR.message_types_by_name['RFQ'] = _RFQ
